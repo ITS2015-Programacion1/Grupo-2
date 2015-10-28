@@ -9,26 +9,23 @@ fondo=pilas.fondos.Pasto()
 
 
 def iniciar_juego():
-    pilas.fondos.Galaxia()
+    pilas.fondos.Cesped()
     menu.eliminar()
     puntos = pilas.actores.Puntaje(x=230, y=200, color=pilas.colores.naranja)
     puntos.magnitud = 40
     pilas.actores.Sonido()
-    estrella=pilas.actores.Estrella(x=50)
-    
+
+
+
     class personaje(pilasengine.actores.Calvo):
           
-          def crear_personaje(self):
+          def crear_personaje():
               personaje=pilas.actores.Calvo()
-              self.escala=0.0
-              
-         
-                           
-              
 
     pilas.actores.vincular(personaje)
     personaje=pilas.actores.personaje()
-    
+
+        
 
 def opciones():
     pilas.fondos.Noche()
