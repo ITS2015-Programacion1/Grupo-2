@@ -7,23 +7,21 @@ fondo=pilas.fondos.Pasto()
 
 
 
-
 def iniciar_juego():
-    pilas.fondos.Cesped()
+    fondo.eliminar()
     menu.eliminar()
     puntos = pilas.actores.Puntaje(x=230, y=200, color=pilas.colores.naranja)
     puntos.magnitud = 40
     pilas.actores.Sonido()
+    
+    mapa = pilas.actores.MapaTiled("mapajuego.tmx")
+    personaje=pilas.actores.Maton()
+    personaje.y=-200
 
 
+    
 
-    class personaje(pilasengine.actores.Calvo):
-          
-          def crear_personaje():
-              personaje=pilas.actores.Calvo()
-
-    pilas.actores.vincular(personaje)
-    personaje=pilas.actores.personaje()
+    
 
         
 
@@ -35,8 +33,9 @@ def opciones():
     text.y=200
     text2=pilas.actores.Texto("-Mover el personaje con las flechas")
     text2.y=165
-    
-
+    text3=pilas.actores.Texto("-Objetivo: Lograr pasar todos los obstaculos de dicho nivel sin perder la vida")
+    text3.y=100
+    text3.escala = .7
 def salir_juego():
     pilas.terminar()
 
@@ -50,6 +49,5 @@ menu=pilas.actores.Menu(
 
 
 
- 
 
 pilas.ejecutar()
