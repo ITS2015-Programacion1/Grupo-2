@@ -1,15 +1,14 @@
 # coding: utf-8
 import pilasengine
 import random
-
+import math
 
 pilas=pilasengine.iniciar()
 fondo=pilas.actores.MapaTiled('mapajuego.tmx')
-puntos=pilas.actores.Puntaje(x=230, y=200, color=pilas.colores.negro)
 pilas.fisica.eliminar_techo()
-pilas.fisica.eliminar_suelo()
 pilas.fisica.eliminar_paredes()
-pilas.actores.Sonido()
+pilas.fisica.eliminar_suelo()
+fin_de_juego = False
 class SaltarUnaVez(pilas.comportamientos.Comportamiento):
 
       def iniciar(self, receptor, velocidad_inicial=5, cuando_termina=None):
@@ -51,30 +50,59 @@ teclas = {
         }
 mi_control = pilas.control.Control(teclas)
 
+class Colisiones(pilas.actores.Actor):
+    def iniciar(self):
+        self.imagen=("pared.png")
+        self.caida=pilas.fisica.Rectangulo(10.7,-225,11050,35, sensor=True, dinamica=False)
+           
+
+
+class Otro(pilasengine.actores.Actor):
+    def iniciar(self):
+        self.imagen = "pared.png"
+
+
 class Personaje(pilasengine.actores.Actor):
-      
       def iniciar(self):
-          self.imagen="personaje.png"
-          self.radio_de_colison= 100
-          self.escala=0.4
-          self.y= -197.6
-          self.x= -5515.1
-          self.figura = pilas.fisica.Circulo(self.x, self.y, 27,
+          self.imagen="aceituna.png"
+          self.y= -158.9
+          self.x= -5513.0
+          self.figura = pilas.fisica.Circulo(self.x, self.y, 17,
             friccion=0, restitucion=0)
           self.figura.sin_rotacion = True
           self.figura.escala_de_gravedad = 2
           self.sensor_pies = pilas.fisica.Rectangulo(self.x, self.y, 20, 5, sensor=True, dinamica=False)
+          self.escala = 1
+          self.aprender(pilas.habilidades.PuedeExplotarConHumo)
+          self.aprender(pilas.habilidades.Arrastrable)
+          self.radio_de_colision=157
+          self.radio_de_colision=16
+          self.espejado=False
           self.saltando = False
-         
+          
+          
+
+      
 
           
 
       def actualizar(self):
-          pilas.camara.x=self.x	
-          velocidad = 7
-          salto = 20
+          velocidad = 9
+          salto = 7
           self.x = self.figura.x
           self.y = self.figura.y
+          pilas.camara.x=self.x	
+          if self.pilas.escena_actual().control.izquierda:
+             self.espejado = False
+             self.x -= 4
+          elif self.pilas.escena_actual().control.derecha:
+               self.x += 4
+               self.espejado = True
+               
+          if self.pilas.escena_actual().control.arriba:
+             if not self.saltando:
+                    self.hacer("SaltarUnaVez")
+
           if self.pilas.control.derecha:
             self.figura.velocidad_x = velocidad
             self.rotacion -= velocidad
@@ -91,55 +119,61 @@ class Personaje(pilasengine.actores.Actor):
           self.sensor_pies.x = self.x
           self.sensor_pies.y = self.y - 20
         
-          if self.esta_pisando_el_suelo():
-              self.imagen = "personaje.png"
-          else:
-              self.imagen = "personaje.png"
+          
 
         
       def esta_pisando_el_suelo(self):
           return len(self.sensor_pies.figuras_en_contacto) > 0
 
 
-               
-          if self.pilas.escena_actual().control.arriba:
-             if not self.saltando:
-                    self.hacer("SaltarUnaVez")
-
-
-pilas.actores.vincular(Personaje)
-protagonista = pilas.actores.Personaje()
-
 
 
 #actores
 
 class Enemigos(pilasengine.actores.Actor):
-      
       def iniciar(self):
           self.imagen="mono.png"
+          self.radio_de_colision=20
+          self.x=-4817.4
+          self.y=-30.9
           self.direccion=-1
           self.espejado=True
 
       def actualizar(self):
-          if self.x <= -300:
+          if self.x <= -4817.4:
              self.direccion=1
              self.espejado = False
-          if self.x >= 300:
+          if self.x >= -4564.4:
              self.direccion=-1
              self.espejado = True
           self.x+=self.direccion * 5
 
+enemigo = Enemigos(pilas)
+enemigo.escala=0
+pilas.actores.vincular(Personaje)
+personaje = Personaje(pilas)
+pilas.actores.vincular(Otro)
+otro = Otro(pilas)
+otro.escala_x = 0
+otro.escala_y = 0
+
 pilas.actores.vincular(Enemigos)
-enemigo=pilas.actores.Enemigos()
 
-def choque(enemigo, protagonista):
-    
+def Prueba(personaje, enemigo):
+    personaje.eliminar()
 
-pilas.colisiones.agregar(enemigo, protagonista, choque)
+
+
+def Morir_con_pinches(personaje, otro):
+    print "Hola"
+
+pilas.colisiones.agregar(personaje, otro ,Morir_con_pinches)
+pilas.colisiones.agregar(personaje, caida, Morir_con_pinches)
+pilas.colisiones.agregar(personaje, enemigo, Prueba)
 lanzador= Enemigos(pilas)
 lanzador.escala_x= .4
 lanzador.escala_y= .4
 pilas.comportamientos.vincular(SaltarUnaVez)
-personaje_salto = Personaje(pilas)
+"personaje_salto = Personaje(pilas)"
 pilas.ejecutar()
+  
