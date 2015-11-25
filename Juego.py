@@ -4,6 +4,7 @@ import random
 import math
 
 pilas=pilasengine.iniciar()
+music=pilas.musica.cargar("musicajuego.mp3")
 fondo=pilas.actores.MapaTiled('mapajuego.tmx')
 pilas.fisica.eliminar_techo()
 pilas.fisica.eliminar_paredes()
@@ -66,12 +67,12 @@ class Personaje(pilasengine.actores.Actor):
           self.imagen="personaje.png"
           self.y= -158.9
           self.x= -5513.0
-          self.figura = pilas.fisica.Circulo(self.x, self.y, 20,
+          self.figura = pilas.fisica.Circulo(self.x, self.y, 17,
             friccion=0, restitucion=0)
           self.figura.sin_rotacion = True
           self.figura.escala_de_gravedad = 2
           self.sensor_pies = pilas.fisica.Rectangulo(self.x, self.y, 20, 5, sensor=True, dinamica=False)
-          self.escala = 0.3
+          self.escala = 0.2
           self.aprender(pilas.habilidades.PuedeExplotarConHumo)
           self.aprender(pilas.habilidades.Arrastrable)
           self.radio_de_colision=157
@@ -87,7 +88,7 @@ class Personaje(pilasengine.actores.Actor):
 
       def actualizar(self):
           velocidad = 7
-          salto = 6.5
+          salto = 7
           self.x = self.figura.x
           self.y = self.figura.y
           pilas.camara.x=self.x	
@@ -335,78 +336,21 @@ class Enemigos12(pilasengine.actores.Actor):
              self.direccion=-1
              self.espejado = True
           self.x+=self.direccion * 5
-class Enemigos13(pilasengine.actores.Actor):
-      def iniciar(self):
-          self.imagen="mono.png"
-          self.radio_de_colision=20
-          self.x=5029.7
-          self.y=33.1
-          self.direccion=-1
-          self.espejado=True
 
-      def actualizar(self):
-          if self.x <= 5029.7:
-             self.direccion=1
-             self.espejado = False
-          if self.x >= 5239.7:
-             self.direccion=-1
-             self.espejado = True
-          self.x+=self.direccion * 5
 
-class Enemigos14(pilasengine.actores.Actor):
-      def iniciar(self):
-          self.imagen="mono.png"
-          self.radio_de_colision=20
-          self.x=-1614.9
-          self.y=-30.9
-          self.direccion=-1
-          self.espejado=True
 
-      def actualizar(self):
-          if self.x <= -1614.9:
-             self.direccion=1
-             self.espejado = False
-          if self.x >= -1354.9:
-             self.direccion=-1
-             self.espejado = True
-          self.x+=self.direccion * 5
-
-class Enemigos15(pilasengine.actores.Actor):
-      def iniciar(self):
-          self.imagen="mono.png"
-          self.radio_de_colision=20
-          self.x=5360.9
-          self.y=-190.9
-          self.direccion=-1
-          self.espejado=True
-
-      def actualizar(self):
-          if self.y <= -190.9:
-             self.direccion=1
-             self.espejado = False
-          if self.y >= 190.9:
-             self.direccion=-1
-             self.espejado = True
-          self.y+=self.direccion * 5          
-
-class Enemigos16(pilasengine.actores.Actor):
-      def iniciar(self):
-          self.imagen="mono.png"
-          self.radio_de_colision=20
-          self.x=5360.9
-          self.y=190.9
-          self.direccion=-1
-          self.espejado=True
-
-      def actualizar(self):
-          if self.y <= 190.9:
-             self.direccion=1
-             self.espejado = False
-          if self.y >= -190.9:
-             self.direccion=-1
-             self.espejado = True
-          self.y+=self.direccion * 5
-
+pilas.actores.vincular(Enemigos)
+pilas.actores.vincular(Enemigos2)
+pilas.actores.vincular(Enemigos3)
+pilas.actores.vincular(Enemigos4)
+pilas.actores.vincular(Enemigos5)
+pilas.actores.vincular(Enemigos6)
+pilas.actores.vincular(Enemigos7)
+pilas.actores.vincular(Enemigos8)
+pilas.actores.vincular(Enemigos9)
+pilas.actores.vincular(Enemigos10)
+pilas.actores.vincular(Enemigos11)
+pilas.actores.vincular(Enemigos12)
 
 
 enemigo= Enemigos(pilas)
@@ -421,10 +365,6 @@ enemigo9= Enemigos9(pilas)
 enemigo10= Enemigos10(pilas)
 enemigo11= Enemigos11(pilas)
 enemigo12= Enemigos12(pilas)
-enemigo13= Enemigos13(pilas)
-enemigo14= Enemigos14(pilas)
-enemigo15= Enemigos15(pilas)
-enemigo16= Enemigos16(pilas)
 
 
 
@@ -440,10 +380,7 @@ enemigo9.escala=0
 enemigo10.escala=0
 enemigo11.escala =0
 enemigo12.escala=0
-enemigo13.escala=0
-enemigo14.escala=0
-enemigo15.escala=0
-enemigo16.escala=0
+
 
 pilas.actores.vincular(Otro)
 otro = Otro(pilas)
@@ -460,22 +397,7 @@ personaje = Personaje(pilas)
 
 
 
-pilas.actores.vincular(Enemigos)
-pilas.actores.vincular(Enemigos2)
-pilas.actores.vincular(Enemigos3)
-pilas.actores.vincular(Enemigos4)
-pilas.actores.vincular(Enemigos5)
-pilas.actores.vincular(Enemigos6)
-pilas.actores.vincular(Enemigos7)
-pilas.actores.vincular(Enemigos8)
-pilas.actores.vincular(Enemigos9)
-pilas.actores.vincular(Enemigos10)
-pilas.actores.vincular(Enemigos11)
-pilas.actores.vincular(Enemigos12)
-pilas.actores.vincular(Enemigos13)
-pilas.actores.vincular(Enemigos14)
-pilas.actores.vincular(Enemigos15)
-pilas.actores.vincular(Enemigos16)
+
 
 
 def Prueba():
@@ -526,22 +448,7 @@ def Prueba12():
     global personaje
     personaje.figura.x=-5429.7
     personaje.figura.y=-126.9
-def Prueba13():
-    global personaje
-    personaje.figura.x=-5429.7
-    personaje.figura.y=-126.9
-def Prueba14():
-    global personaje
-    personaje.figura.x=-5429.7
-    personaje.figura.y=-126.9
-def Prueba15():
-    global personaje
-    personaje.figura.x=-5429.7
-    personaje.figura.y=-126.9
-def Prueba16():
-    global personaje
-    personaje.figura.x=-5429.7
-    personaje.figura.y=-126.9   
+
 def Morir_con_pinches():
     global personaje
     personaje.figura.x=-5429.7
@@ -560,10 +467,6 @@ pilas.colisiones.agregar(personaje, enemigo9, Prueba9)
 pilas.colisiones.agregar(personaje, enemigo10, Prueba10)
 pilas.colisiones.agregar(personaje, enemigo11, Prueba11)
 pilas.colisiones.agregar(personaje, enemigo12, Prueba12)
-pilas.colisiones.agregar(personaje, enemigo13, Prueba13)
-pilas.colisiones.agregar(personaje, enemigo14, Prueba14)
-pilas.colisiones.agregar(personaje, enemigo15, Prueba15)
-pilas.colisiones.agregar(personaje, enemigo16, Prueba16)
 
 
 
@@ -603,18 +506,6 @@ lanzador11.escala_y= .4
 lanzador12= Enemigos12(pilas)
 lanzador12.escala_x= .4
 lanzador12.escala_y= .4
-lanzador13= Enemigos13(pilas)
-lanzador13.escala_x= .4
-lanzador13.escala_y= .4
-lanzador14= Enemigos14(pilas)
-lanzador14.escala_x= .4
-lanzador14.escala_y= .4
-lanzador15= Enemigos15(pilas)
-lanzador15.escala_x= .4
-lanzador15.escala_y= .4
-lanzador16= Enemigos16(pilas)
-lanzador16.escala_x= .4
-lanzador16.escala_y= .4
 
 
 
