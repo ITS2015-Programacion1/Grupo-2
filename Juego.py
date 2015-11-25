@@ -53,21 +53,25 @@ mi_control = pilas.control.Control(teclas)
 
     
            
-
+class Otro(pilasengine.actores.Actor):
+    def iniciar(self):
+        self.imagen = "pared.png"
+        self.escala_x=0
+        self.escala_y=0 
 
 
 
 class Personaje(pilasengine.actores.Actor):
       def iniciar(self):
-          self.imagen="aceituna.png"
+          self.imagen="personaje.png"
           self.y= -158.9
           self.x= -5513.0
-          self.figura = pilas.fisica.Circulo(self.x, self.y, 17,
+          self.figura = pilas.fisica.Circulo(self.x, self.y, 20,
             friccion=0, restitucion=0)
           self.figura.sin_rotacion = True
           self.figura.escala_de_gravedad = 2
           self.sensor_pies = pilas.fisica.Rectangulo(self.x, self.y, 20, 5, sensor=True, dinamica=False)
-          self.escala = 1
+          self.escala = 0.3
           self.aprender(pilas.habilidades.PuedeExplotarConHumo)
           self.aprender(pilas.habilidades.Arrastrable)
           self.radio_de_colision=157
@@ -82,8 +86,8 @@ class Personaje(pilasengine.actores.Actor):
           
 
       def actualizar(self):
-          velocidad = 20
-          salto = 35
+          velocidad = 7
+          salto = 6.5
           self.x = self.figura.x
           self.y = self.figura.y
           pilas.camara.x=self.x	
@@ -441,6 +445,15 @@ enemigo14.escala=0
 enemigo15.escala=0
 enemigo16.escala=0
 
+pilas.actores.vincular(Otro)
+otro = Otro(pilas)
+otro.escala_x = 0
+otro.escala_y = 0
+otro.x=9.7
+otro.y=-221
+caida=pilas.fisica.Rectangulo(10.7,-225,11500,35, sensor=True, dinamica=False)
+otro.figura_de_colision=caida
+
 
 pilas.actores.vincular(Personaje)
 personaje = Personaje(pilas)
@@ -465,41 +478,76 @@ pilas.actores.vincular(Enemigos15)
 pilas.actores.vincular(Enemigos16)
 
 
-def Prueba(personaje, enemigo,):
-    personaje.eliminar()
-def Prueba2(personaje, enemigo2):
-    personaje.eliminar()
-def Prueba3(personaje, enemigo3):
-    personaje.eliminar()
-def Prueba4(personaje, enemigo4):
-    personaje.eliminar()
-def Prueba5(personaje, enemigo5):
-    personaje.eliminar()
-def Prueba6(personaje, enemigo6):
-    personaje.eliminar()
-def Prueba7(personaje, enemigo7):
-    personaje.eliminar()
-def Prueba8(personaje, enemigo8):
-    personaje.eliminar()
-def Prueba9(personaje, enemigo9):
-    personaje.eliminar()
-def Prueba10(personaje, enemig10):
-    personaje.eliminar()
-def Prueba11(personaje, enemigo11):
-    personaje.eliminar()
-def Prueba12(personaje, enemigo12):
-    personaje.eliminar()
-def Prueba13(personaje, enemigo13):
-    personaje.eliminar()
-def Prueba14(personaje, enemigo14):
-    personaje.eliminar()
-def Prueba15(personaje, enemigo15):
-    personaje.eliminar()
-def Prueba16(personaje, enemigo16):
-    personaje.eliminar()        
-def Morir_con_pinches(personaje, otro):
-    print "Hola"
+def Prueba():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba2():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba3():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba4():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba5():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba6():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba7():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba8():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba9():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba10():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba11():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba12():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba13():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba14():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba15():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9
+def Prueba16():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9   
+def Morir_con_pinches():
+    global personaje
+    personaje.figura.x=-5429.7
+    personaje.figura.y=-126.9  
 
+pilas.colisiones.agregar(personaje, otro, Morir_con_pinches)
 pilas.colisiones.agregar(personaje, enemigo, Prueba)
 pilas.colisiones.agregar(personaje, enemigo2, Prueba2)
 pilas.colisiones.agregar(personaje, enemigo3, Prueba3)
